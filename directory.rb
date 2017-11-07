@@ -1,5 +1,6 @@
 def input_students
   students = []
+  months = [:January, :February, :March, :April, :May, :June, :July, :August, :September, :October, :November, :December, :'']
   while true do
     puts "Please enter the name of a student. To finish, just hit return."
     name = gets.chomp
@@ -8,6 +9,10 @@ def input_students
     end
     puts "Which cohort does the student belong to?"
     cohort = gets.chomp.capitalize.to_sym
+    while !months.include?(cohort)
+      puts "Which cohort does the student belong to?"
+      cohort = gets.chomp.capitalize.to_sym
+    end
     if cohort.empty?
       cohort = "N/A".to_sym
     end
