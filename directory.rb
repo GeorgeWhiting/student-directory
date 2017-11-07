@@ -14,14 +14,16 @@ end
 def print_header
   puts "The students of Villains Academy"
   puts "-------------"
-  puts "Displaying names shorter than 12 characters\n\n"
 end
 def print(names)
-  to_print = names.select {|name| name[:name].length < 12}
-  to_print.each_with_index{|name,index| puts "#{index+1}. #{name[:name]} (#{name[:cohort]} cohort)"}
+  i=0
+  until i == names.length
+    puts "#{i+1}. #{names[i][:name]} (#{names[i][:cohort]} cohort)"
+    i+=1
+  end
 end
 def print_footer(names)
-  puts "\nOverall, we have #{names.count} great students."
+  puts "Overall, we have #{names.count} great students."
 end
 #User inputs students in to array
 students = input_students
