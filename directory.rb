@@ -1,24 +1,28 @@
 def input_students
-  puts "Please enter the name of a student"
-  puts "To finish, just hit return twice"
   students = []
-  name = gets.chomp
-  puts "Please enter the height of the student"
-  height = gets.chomp
-  puts "Please enter the nationality of the student"
-  nationality = gets.chomp
   while true do
-    students << {name: name, cohort: :November, height: height, nationality: nationality}
-    puts "Now we have #{students.count} students"
-    puts "Please enter the name of a student"
+    puts "Please enter the name of a student. To finish, just hit return."
     name = gets.chomp
     if name.empty?
       break
     end
+    puts "Which cohort does the student belong to?"
+    cohort = gets.chomp.capitalize.to_sym
+    if cohort.empty?
+      cohort = "N/A".to_sym
+    end
     puts "Please enter the height of the student"
     height = gets.chomp
+    if height.empty?
+      height = "N/A"
+    end
     puts "Please enter the nationality of the student"
-    nationality = gets.chomp
+    nationality = gets.chomp.capitalize
+    if nationality.empty?
+      nationality = "N/A"
+    end
+    students << {name: name, cohort: cohort, height: height, nationality: nationality}
+    puts "Now we have #{students.count} students"
   end
   students
 end
