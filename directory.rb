@@ -16,7 +16,7 @@ def print_header
   puts "-------------"
 end
 def print(names)
-  names.each{|name| puts "#{name[:name]} (#{name[:cohort]} cohort)"}
+  names.each_with_index{|name,index| puts "#{index+1}. #{name[:name]} (#{name[:cohort]} cohort)"}
 end
 def print_footer(names)
   puts "Overall, we have #{names.count} great students."
