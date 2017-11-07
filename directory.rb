@@ -10,18 +10,14 @@ def input_students
   end
   students
 end
-def which_letter?
-  puts "Which letter would you like to filter students by?"
-  letter = gets.chomp
-  letter
-end
-def print_header(letter)
+
+def print_header
   puts "The students of Villains Academy"
   puts "-------------"
-  puts "Beginning with '#{letter}'\n\n"
+  puts "Displaying names shorter than 12 characters\n\n"
 end
-def print(names,letter)
-  to_print = names.select {|name| name[:name].start_with?(letter)}
+def print(names)
+  to_print = names.select {|name| name[:name].length < 12}
   to_print.each_with_index{|name,index| puts "#{index+1}. #{name[:name]} (#{name[:cohort]} cohort)"}
 end
 def print_footer(names)
@@ -29,9 +25,8 @@ def print_footer(names)
 end
 #User inputs students in to array
 students = input_students
-letter = which_letter?
 #Then print them all
-print_header(letter)
-print(students,letter)
+print_header
+print(students)
 #Prints total number of students
 print_footer(students)
