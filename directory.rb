@@ -3,26 +3,26 @@ def input_students
   $months = [:January, :February, :March, :April, :May, :June, :July, :August, :September, :October, :November, :December, "N/A".to_sym]
   while true do
     puts "Please enter the name of a student. To finish, just hit return."
-    name = gets.rstrip
+    name = gets.chomp
     if name.empty?
       break
     end
     puts "Which cohort does the student belong to?"
-    cohort = gets.rstrip.capitalize.to_sym
+    cohort = gets.chomp.capitalize.to_sym
     if cohort.empty?
       cohort = "N/A".to_sym
     end
     while !$months.include?(cohort)
       puts "Which cohort does the student belong to?"
-      cohort = gets.rstrip.capitalize.to_sym
+      cohort = gets.chomp.capitalize.to_sym
     end
     puts "Please enter the height of the student"
-    height = gets.rstrip
+    height = gets.chomp
     if height.empty?
       height = "N/A"
     end
     puts "Please enter the nationality of the student"
-    nationality = gets.rstrip.capitalize
+    nationality = gets.chomp.capitalize
     if nationality.empty?
       nationality = "N/A"
     end
@@ -51,7 +51,7 @@ end
 #User inputs students in to array
 students = input_students
 #Then print them all
-print_header
-print(students)
+print_header unless students.count == 0
+print(students) unless students.count == 0
 #Prints total number of students
-print_footer(students)
+print_footer(students) unless students.count == 0
