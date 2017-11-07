@@ -1,6 +1,6 @@
 def input_students
   students = []
-  months = [:January, :February, :March, :April, :May, :June, :July, :August, :September, :October, :November, :December, :'']
+  $months = [:January, :February, :March, :April, :May, :June, :July, :August, :September, :October, :November, :December, :'']
   while true do
     puts "Please enter the name of a student. To finish, just hit return."
     name = gets.chomp
@@ -9,7 +9,7 @@ def input_students
     end
     puts "Which cohort does the student belong to?"
     cohort = gets.chomp.capitalize.to_sym
-    while !months.include?(cohort)
+    while !$months.include?(cohort)
       puts "Which cohort does the student belong to?"
       cohort = gets.chomp.capitalize.to_sym
     end
@@ -37,7 +37,10 @@ def print_header
   puts "-------------".center(100)
 end
 def print(names)
-  names.each_with_index{|name,index| puts "#{index+1}. #{name[:name]} (#{name[:cohort]} cohort). Height: #{name[:height]}, Nationality: #{name[:nationality]}".center(100)}
+  names.sort_by!{|a| $months.index(a[:cohort])}
+  names.group_by{|d| d[:cohort]}.each do |g|
+    g[1].each_with_index{|name,index| puts "#{index+1}. #{name[:name]} (#{name[:cohort]} cohort). Height: #{name[:height]}, Nationality: #{name[:nationality]}".center(100)}
+  end
 end
 def print_footer(names)
   puts
