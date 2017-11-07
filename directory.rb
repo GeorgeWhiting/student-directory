@@ -1,6 +1,6 @@
 def input_students
   students = []
-  $months = [:January, :February, :March, :April, :May, :June, :July, :August, :September, :October, :November, :December, :'']
+  $months = [:January, :February, :March, :April, :May, :June, :July, :August, :September, :October, :November, :December, "N/A".to_sym]
   while true do
     puts "Please enter the name of a student. To finish, just hit return."
     name = gets.chomp
@@ -9,12 +9,12 @@ def input_students
     end
     puts "Which cohort does the student belong to?"
     cohort = gets.chomp.capitalize.to_sym
+    if cohort.empty?
+      cohort = "N/A".to_sym
+    end
     while !$months.include?(cohort)
       puts "Which cohort does the student belong to?"
       cohort = gets.chomp.capitalize.to_sym
-    end
-    if cohort.empty?
-      cohort = "N/A".to_sym
     end
     puts "Please enter the height of the student"
     height = gets.chomp
@@ -27,7 +27,8 @@ def input_students
       nationality = "N/A"
     end
     students << {name: name, cohort: cohort, height: height, nationality: nationality}
-    puts "Now we have #{students.count} students"
+    message = "Now we have #{students.count} students"
+    puts students.count == 1? message.chop : message
   end
   students
 end
@@ -43,8 +44,9 @@ def print(names)
   end
 end
 def print_footer(names)
+  message = "Overall, we have #{names.count} great students"
   puts
-  puts "Overall, we have #{names.count} great students.".center(100)
+  puts names.count == 1? message.chop.center(100) : message.center(100)
 end
 #User inputs students in to array
 students = input_students
