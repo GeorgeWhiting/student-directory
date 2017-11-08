@@ -26,7 +26,7 @@ def input_students
     if nationality.empty?
       nationality = "N/A"
     end
-    @students << {name: name, cohort: cohort, height: height, nationality: nationality}
+    fill_student_array(name, cohort, height, nationality)
     message = "Now we have #{@students.count} students"
     puts @students.count == 1? message.chop : message
   end
@@ -104,7 +104,7 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort, height, nationality = line.chomp.split(",")
-    @students << {name: name, cohort: cohort.to_sym, height: height, nationality: nationality}
+    fill_student_array(name, cohort, height, nationality)
   end
   file.close
 end
@@ -119,6 +119,10 @@ def try_load_students
     puts "Sorry, #{filename} doesn't exist"
     exit
   end
+end
+
+def fill_student_array(name, cohort, height, nationality)
+  @students << {name: name, cohort: cohort.to_sym, height: height, nationality: nationality}
 end
 
 try_load_students
