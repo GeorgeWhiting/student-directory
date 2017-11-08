@@ -1,6 +1,6 @@
 @students = []
+@months = [:January, :February, :March, :April, :May, :June, :July, :August, :September, :October, :November, :December, "N/A".to_sym]
 def input_students
-  $months = [:January, :February, :March, :April, :May, :June, :July, :August, :September, :October, :November, :December, "N/A".to_sym]
   while true do
     puts "Please enter the name of a student. To finish, just hit return."
     name = gets.chomp
@@ -12,7 +12,7 @@ def input_students
     if cohort.empty?
       cohort = "N/A".to_sym
     end
-    while !$months.include?(cohort)
+    while !@months.include?(cohort)
       puts "Which cohort does the student belong to?"
       cohort = gets.chomp.capitalize.to_sym
     end
@@ -38,7 +38,7 @@ def print_header
 end
 
 def print_students_list
-  @students.sort_by!{|a| $months.index(a[:cohort])}
+  @students.sort_by!{|a| @months.index(a[:cohort])}
   @students.group_by{|d| d[:cohort]}.each do |g|
     g[1].each_with_index{|name,index| puts "#{index+1}. #{name[:name]} (#{name[:cohort]} cohort). Height: #{name[:height]}, Nationality: #{name[:nationality]}".center(100)}
   end
@@ -62,6 +62,7 @@ def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
   puts "3. Save students to students.csv"
+  puts "4. Load students from students.csv"
   puts "9. Exit"
 end
 
@@ -79,6 +80,8 @@ def process(selection)
       show_students
     when "3"
       save_students
+    when "4"
+      load_students
     when "9"
       exit
     else
@@ -97,5 +100,14 @@ def save_students
   puts "Students saved to file"
 end
 
+def load_students
+  file = File.open("students.csv", "r")
+  file.readlines.each do |line|
+    name, cohort, height, nationality = line.chomp.split(",")
+    @students << {name: name, cohort: cohort.to_sym, height: height, nationality: nationality}
+  end
+  puts @students
+  file.close
+end
 
 interactive_menu
