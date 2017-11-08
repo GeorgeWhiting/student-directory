@@ -3,26 +3,26 @@
 def input_students
   while true do
     puts "Please enter the name of a student. To finish, just hit return."
-    name = gets.chomp
+    name = STDIN.gets.chomp
     if name.empty?
       break
     end
     puts "Which cohort does the student belong to?"
-    cohort = gets.chomp.capitalize.to_sym
+    cohort = STDIN.gets.chomp.capitalize.to_sym
     if cohort.empty?
       cohort = "N/A".to_sym
     end
     while !@months.include?(cohort)
       puts "Which cohort does the student belong to?"
-      cohort = gets.chomp.capitalize.to_sym
+      cohort = STDIN.gets.chomp.capitalize.to_sym
     end
     puts "Please enter the height of the student"
-    height = gets.chomp
+    height = STDIN.gets.chomp
     if height.empty?
       height = "N/A"
     end
     puts "Please enter the nationality of the student"
-    nationality = gets.chomp.capitalize
+    nationality = STDIN.gets.chomp.capitalize
     if nationality.empty?
       nationality = "N/A"
     end
@@ -54,7 +54,7 @@ end
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -100,14 +100,26 @@ def save_students
   puts "Students saved to file"
 end
 
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort, height, nationality = line.chomp.split(",")
     @students << {name: name, cohort: cohort.to_sym, height: height, nationality: nationality}
   end
-  puts @students
   file.close
 end
 
+def try_load_students
+  filename = ARGV.first
+  return if filename.nil?
+  if File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} students from #{filename}"
+  else
+    puts "Sorry, #{filename} doesn't exist"
+    exit
+  end
+end
+
+try_load_students
 interactive_menu
