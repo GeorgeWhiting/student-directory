@@ -47,7 +47,34 @@ def print_footer(names)
   message = "Overall, we have #{names.count} great students"
   puts
   puts names.count == 1? message.chop.center(100) : message.center(100)
+  puts
 end
+
+def interactive_menu
+  students = []
+  loop do
+    puts "1. Input the students"
+    puts "2. Show the students"
+    puts "9. Exit"
+
+    selection = gets.chomp
+
+    case selection
+      when "1"
+        students = input_students
+      when "2"
+        print_header unless students.count == 0
+        print(students) unless students.count == 0
+        print_footer(students) unless students.count == 0
+      when "9"
+        exit
+      else
+        puts "Thats not a command"
+    end
+  end
+end
+interactive_menu
+=begin
 #User inputs students in to array
 students = input_students
 #Then print them all
@@ -55,3 +82,4 @@ print_header unless students.count == 0
 print(students) unless students.count == 0
 #Prints total number of students
 print_footer(students) unless students.count == 0
+=end
