@@ -2,30 +2,17 @@
 @months = [:January, :February, :March, :April, :May, :June, :July, :August, :September, :October, :November, :December, "N/A".to_sym]
 def input_students
   while true do
-    puts "Please enter the name of a student. To finish, just hit return."
-    name = STDIN.gets.chomp
-    if name.empty?
+    name = get_variable("name")
+    if name == "N/A".to_sym
       break
     end
-    puts "Which cohort does the student belong to?"
-    cohort = STDIN.gets.chomp.capitalize.to_sym
-    if cohort.empty?
-      cohort = "N/A".to_sym
-    end
+    cohort = get_variable("cohort").capitalize.to_sym
     while !@months.include?(cohort)
-      puts "Which cohort does the student belong to?"
-      cohort = STDIN.gets.chomp.capitalize.to_sym
+      cohort = get_variable("cohort").capitalize.to_sym
     end
-    puts "Please enter the height of the student"
-    height = STDIN.gets.chomp
-    if height.empty?
-      height = "N/A"
-    end
-    puts "Please enter the nationality of the student"
-    nationality = STDIN.gets.chomp.capitalize
-    if nationality.empty?
-      nationality = "N/A"
-    end
+    height = get_variable("height")
+    nationality = get_variable("nationality").capitalize
+
     fill_student_array(name, cohort, height, nationality)
     message = "Now we have #{@students.count} students"
     puts @students.count == 1? message.chop : message
@@ -125,6 +112,15 @@ end
 
 def fill_student_array(name, cohort, height, nationality)
   @students << {name: name, cohort: cohort.to_sym, height: height, nationality: nationality}
+end
+
+def get_variable(property)
+  puts "Please enter the #{property} of the student"
+  variable = STDIN.gets.chomp
+  if variable.empty?
+    variable = "N/A".to_sym
+  end
+  variable
 end
 
 try_load_students
