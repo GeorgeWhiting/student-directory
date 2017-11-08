@@ -25,9 +25,10 @@ def print_header
 end
 
 def print_students_list
-  @students.sort_by!{|a| @months.index(a[:cohort])}
-  @students.group_by{|d| d[:cohort]}.each do |g|
-    g[1].each_with_index{|name,index| puts "#{index+1}. #{name[:name]} (#{name[:cohort]} cohort). Height: #{name[:height]}, Nationality: #{name[:nationality]}".center(100)}
+
+  @students.sort_by!{|students| @months.index(students[:cohort])}
+  @students.group_by{|students| students[:cohort]}.each do |students|
+    students[1].each {|name| puts "#{name[:name]} (#{name[:cohort]} cohort). Height: #{name[:height]}, Nationality: #{name[:nationality]}".center(100)}
   end
 end
 
@@ -41,7 +42,7 @@ end
 def interactive_menu
   loop do
     print_menu
-    process(STDIN.gets.chomp)
+    menu_switch(STDIN.gets.chomp)
   end
 end
 
@@ -59,7 +60,7 @@ def show_students
   print_footer unless @students.count == 0
 end
 
-def process(selection)
+def menu_switch(selection)
   case selection
     when "1"
       input_students
