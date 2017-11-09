@@ -83,23 +83,23 @@ def menu_switch(selection)
 end
 
 def save_students(filename = "students.csv")
-  file = File.open(filename,"w")
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort], student[:height], student[:nationality]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  File.open(filename,"w") do |file|
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort], student[:height], student[:nationality]]
+      csv_line = student_data.join(",")
+      file.puts csv_line
+    end
   end
-  file.close
   puts "Students saved to #{filename}"
 end
 
 def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort, height, nationality = line.chomp.split(",")
-    fill_student_array(name, cohort, height, nationality)
+  File.open(filename, "r") do |file|
+    file.readlines.each do |line|
+      name, cohort, height, nationality = line.chomp.split(",")
+      fill_student_array(name, cohort, height, nationality)
+    end
   end
-  file.close
   puts "Loaded #{@students.count} students from #{filename}"
 end
 
