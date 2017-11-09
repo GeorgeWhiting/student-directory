@@ -50,8 +50,8 @@ def print_menu
   puts
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save students to students.csv"
-  puts "4. Load students from students.csv"
+  puts "3. Save students to file"
+  puts "4. Load students from file"
   puts "9. Exit"
 end
 
@@ -68,9 +68,9 @@ def menu_switch(selection)
     when "2"
       show_students
     when "3"
-      save_students
+      save_students(get_filename)
     when "4"
-      load_students
+      load_students(get_filename)
     when "9"
       exit
     else
@@ -124,5 +124,15 @@ def get_variable(property)
   variable
 end
 
+def get_filename
+  puts "Enter filename to use. Leave blank to use students.csv"
+  filename = STDIN.gets.chomp
+  if filename = ''
+    filename = "students.csv"
+  end
+end
+
 try_load_students
 interactive_menu
+
+
