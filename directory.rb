@@ -1,3 +1,4 @@
+require 'csv'
 @students = []
 @months = [:January, :February, :March, :April, :May, :June, :July, :August, :September, :October, :November, :December, "N/A".to_sym]
 def input_students
@@ -83,11 +84,10 @@ def menu_switch(selection)
 end
 
 def save_students(filename = "students.csv")
-  File.open(filename,"w") do |file|
+  CSV.open(filename,"w") do |file|
     @students.each do |student|
       student_data = [student[:name], student[:cohort], student[:height], student[:nationality]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
+      file << student_data
     end
   end
   puts "Students saved to #{filename}"
@@ -95,8 +95,8 @@ end
 
 def load_students(filename = "students.csv")
   File.open(filename, "r") do |file|
-    file.readlines.each do |line|
-      name, cohort, height, nationality = line.chomp.split(",")
+    CSV.foreach(file) do |line|
+      name, cohort, height, nationality = line
       fill_student_array(name, cohort, height, nationality)
     end
   end
