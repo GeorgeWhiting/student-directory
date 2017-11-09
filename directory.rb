@@ -26,9 +26,13 @@ def print_header
 end
 
 def print_students_list
+  index = 1
   @students.sort_by!{|students| @months.index(students[:cohort])}
   @students.group_by{|students| students[:cohort]}.each do |students|
-    students[1].each {|name| puts "#{name[:name]} (#{name[:cohort]} cohort). Height: #{name[:height]}, Nationality: #{name[:nationality]}".center(100)}
+    students[1].each do |name|
+      puts "#{index}. #{name[:name]} (#{name[:cohort]} cohort). Height: #{name[:height]}, Nationality: #{name[:nationality]}".center(100)
+      index += 1
+    end
   end
 end
 
@@ -127,7 +131,7 @@ end
 def get_filename
   puts "Enter filename to use. Leave blank to use students.csv"
   filename = STDIN.gets.chomp
-  if filename = ''
+  if filename == ''
     filename = "students.csv"
   end
 end
