@@ -7,3 +7,5 @@ The student directory script allows you to manage the list of students enrolled 
 ```shell
 ruby directory.rb
 ```
+
+Created as part of the Makers Academy precourse
